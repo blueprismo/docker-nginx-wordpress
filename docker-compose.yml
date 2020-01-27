@@ -1,0 +1,25 @@
+version: '3.6'
+services:
+  mysql:
+    image: mariadb:${MARIADB_VERSION:-latest}
+    container_name: mysql
+    volumes:
+      - /usr/enin/docker/wpress/volumes/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=Jvsf1739
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=Jvsf1739
+      - MYSQL_DATABASE=wordpress
+    restart: always
+    ports:
+      - '3306:3306'
+  nginx-wp:
+    image: provaenwp
+    container_name: ngx-wp-php-fpm
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - /usr/enin/docker/wpress/volumes/nginx/wordpress.conf:/etc/nginx/sites-enabled/wordpress.conf
+      - /usr/enin/docker/wpress/volumes/nginx/nginx.conf:/etc/nginx/nginx.conf      
+    restart: always
